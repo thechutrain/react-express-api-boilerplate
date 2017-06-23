@@ -9,12 +9,6 @@ class MakeRequest extends Component {
 		}
 	}
 	componentDidMount() {
-		// ** promise .then should be an arrow function or else it won't get bound!!
-		// axios.get('/test').then(function(response) {
-		// 	console.log('made request!')
-		// 	console.log(this) // is undefined !
-		// })
-
 		axios.get('/test').then(response => {
 			console.log('made request!')
 			this.setState(prevState => {
@@ -24,11 +18,11 @@ class MakeRequest extends Component {
 	}
 	render() {
 		return (
-			<div className="MakeRequest">
+			<div className="MakeRequest" style={{ border: '1px dashed pink' }}>
 				<p>API data: </p>
 				<code>
 					<pre>
-						{JSON.stringify(this.state.data, null, 2)}
+						{JSON.stringify(this.state.data, null, 4)}
 
 					</pre>
 				</code>
