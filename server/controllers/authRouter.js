@@ -2,10 +2,9 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 
-router.get('/', (req, res) => {
-	res.json({ url: 'api/auth' })
-})
-
+/*  ========== Register Route ===========
+*
+*/
 router.post('/register', (req, res) => {
 	// 1. Get the username and password from registration
 	const { username, password } = req.body
@@ -34,5 +33,9 @@ router.post('/register', (req, res) => {
 		})
 	})
 })
+
+/*  ========== Login Route ===========
+*
+*/
 
 module.exports = router
