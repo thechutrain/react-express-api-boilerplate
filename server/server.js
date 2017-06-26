@@ -1,8 +1,13 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001
 const app = express()
 require('dotenv').load()
+
+// ======= MIDDLEWARE =======
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 // ======= DEVELOPMENT BUILD =======
 if (process.env.NODE_ENV === 'DEV') {
@@ -23,6 +28,8 @@ if (process.env.NODE_ENV === 'PROD') {
 app.get('/test', (req, res) => {
 	res.json({ test: 'hi' })
 })
+
+app.use('/api/auth', require('./controllers/authRouter.js'))
 
 // Start Server && Connect to Mongo DB
 if (process.env.NODE_ENV !== 'testing') {
