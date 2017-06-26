@@ -7,25 +7,36 @@ require('dotenv').load()
 // ======= DEVELOPMENT BUILD =======
 if (process.env.NODE_ENV === 'DEV') {
 	console.log('======== DEVELOPMENT ENVIRONMENT!!!! ========')
-	app.get('/test', (req, res) => {
-		res.json({ test: 'hi' })
-	})
-	app.listen(PORT, () => {
-		console.log(`Listening on port: ${PORT}`)
-	})
 }
 
 // ======= PRODUCTION BUILD =========
 if (process.env.NODE_ENV === 'PROD') {
 	console.log('======== PRODUCTION ENVIRONMENT!!!! ========')
 	app.use(express.static(path.join(__dirname, '../', 'build')))
-	app.get('/test', (req, res) => {
-		res.json({ test: 'hello' })
-	})
-	app.get('*', (req, res) => {
+	// QUESTION: should this be * or / ???
+	app.get('/', (req, res) => {
 		res.sendFile(path.join(__dirname, '../', '/build/index.html'))
 	})
-	app.listen(PORT, () => {
-		console.log(`Listening on port: ${PORT}`)
-	})
 }
+
+// ======= API Routes =========
+app.get('/test', (req, res) => {
+	res.json({ test: 'hi' })
+})
+
+// Start Server && Connect to Mongo DB
+if (process.env.NODE_ENV !== 'testing') {
+	require('./models')
+		.connect(process.env.MONGODB_URI)
+		.then(() => {
+			console.log(`Connected to the database: ${process.env.MONGODB_URI}`)
+			app.listen(PORT, () => {
+				console.log(`Listening on port: ${PORT}`)
+			})
+		})
+		.catch(err => {
+			console.log(`Error connecting to MongoDB @ ${process.env.MONGODB_URI}`)
+		})
+}
+
+module.exports = app // for testing :)
