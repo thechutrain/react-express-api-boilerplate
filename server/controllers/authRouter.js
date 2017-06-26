@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 /*  ========== Register Route ===========
 *
@@ -31,11 +32,55 @@ router.post('/register', (req, res) => {
 			}
 			return res.json({ success: true })
 		})
-	})
+	}) // closes User.find()
 })
 
 /*  ========== Login Route ===========
 *
 */
+router.post('/login', (req, res) => {
+	// 1. get the username and password from the request
+	const { username, password } = req.body
+	if (!username || !password) {
+		return res.json({
+			error: true,
+			errMsgs: ['Must provide username & password']
+		})
+	}
+	// 2. Search database to find the user
+	User.findOne({ username }, (err, userMatch) => {
+		console.log('userMatch: ', userMatch)
+		if (err || userMatch === null) {
+			return res.json({
+				error: true,
+				errMsgs: ['No userMatch for that username']
+			})
+		} else if (!userMatch.checkPassword(password)) {
+			return res.json({ error: true, errMsgs: ['Password is incorrect'] })
+		} else {
+			// 3. Valid user ... so let's make a token
+			// 3a. make the payload of the JWT (IMPORTANT don't put sensitive data here!! like a password)
+			const payload = {
+				_id: userMatch._id,
+				username: userMatch.username,
+				isAdmin: userMatch.isAdmin || false,
+				exp: Math.floor(Date.now() / 1000) + 60 * 60 // expires in 1 hour
+			}
+			// console.dir(payload)
+
+			// 3b. Sign the token with your password (look at the .env file!)
+			const token = jwt.sign(payload, process.env.JWT_PASSPHRASE)
+			res.json({ token })
+
+			// 4. Make a cookie, and store the token in the cookie so users send it with every request
+			// send cookie to user
+			// const options = {
+			// 	httpOnly: true
+			// }
+			// res.cookie('token', token, options)
+			// res.json({ success: true, msg: 'you are signed in' })
+		}
+	}) // ends User.findOne query
+})
 
 module.exports = router
