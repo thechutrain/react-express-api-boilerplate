@@ -7,7 +7,7 @@ const app = express()
 if (process.env.NODE_ENV === 'DEV') {
 	console.log('======== DEVELOPMENT ENVIRONMENT!!!! ========')
 	app.get('/test', (req, res) => {
-		res.json({ test: 'hi' })
+		res.json({ test: 'hi franklin!!!' })
 	})
 	app.listen(PORT, () => {
 		console.log(`Listening on port: ${PORT}`)
