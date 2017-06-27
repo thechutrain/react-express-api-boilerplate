@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import LoginComponent from './Components/LoginComponent.jsx'
 import HomeComponent from './Components/HomeComponent.jsx'
+import RegisterForm from './Components/RegisterForm.jsx'
 
 class App extends Component {
 	constructor(props) {
@@ -50,6 +51,9 @@ class App extends Component {
 							: <li className="nav-item mr-2">
 									<Link to="/login">Login</Link>
 								</li>}
+						<li className="nav-item mr-2">
+							<Link to="/register">Register</Link>
+						</li>
 					</ul>
 				</nav>
 				{/*  Routes for the Components*/}
@@ -58,6 +62,7 @@ class App extends Component {
 						path="/login"
 						render={() => <LoginComponent setToken={this.setToken} />}
 					/>
+					<Route path="/register" component={RegisterForm} />
 					<Route
 						exact
 						path="/"
