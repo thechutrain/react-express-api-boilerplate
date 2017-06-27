@@ -3,6 +3,9 @@
 
 * A simple react app with a backend express API 💥 🎉 🐝
 
+## Heroku Demo
+- see the demo of the site: [https://react-express-boilerplate.herokuapp.com/](https://react-express-boilerplate.herokuapp.com/)
+
 ## Technology:
 - react.js + [Create React App](https://github.com/facebookincubator/create-react-app).
 - [Express.js](https://expressjs.com/)
