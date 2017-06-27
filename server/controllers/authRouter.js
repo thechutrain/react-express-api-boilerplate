@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const os = require('os')
+const dns = require('dns')
 
 router.get('/', (req, res) => {
 	res.json({ test: '123' })
@@ -10,6 +12,10 @@ router.get('/', (req, res) => {
 *
 */
 router.post('/register', (req, res) => {
+	// // TODO - check where the req is coming from (should only come from self)
+	// console.log('======== REQ Check  ========')
+	// console.log(req.headers.host)
+	// console.log(req.headers.origin)
 	// 1. Get the username and password from registration
 	const { username, password } = req.body
 	// 2. Search the User database to make sure there isn't already a user with the same username
@@ -42,6 +48,17 @@ router.post('/register', (req, res) => {
 *
 */
 router.post('/login', (req, res) => {
+	// TODO - check where the req is coming from (should only come from self)
+	console.log('======== REQ Check  ========')
+	console.log(req.headers.host)
+	console.log(req.headers.origin)
+	console.log('======== Check current OS ========')
+	console.log(os.hostname())
+	console.log(os.networkInterfaces())
+	dns.lookup(os.hostname(), (err, add, fam) => {
+		console.log(add)
+	})
+
 	// 1. get the username and password from the request
 	const { username, password } = req.body
 	if (!username || !password) {
