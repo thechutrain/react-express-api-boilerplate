@@ -10,12 +10,13 @@ Template from [olivierlacan](https://github.com/olivierlacan/keep-a-changelog/ed
 ## [2.0.0] - 2017-06-27
 ### Added
 - Added a changelog
+- Added RegisterForm component
 
 
 
-### Changed
+<!-- ### Changed
 - Start using "changelog" over "change log" since it's the common usage.
-- Start versioning based on the current English version at 0.3.0 to help
+- Start versioning based on the current English version at 0.3.0 to help -->
 
 
 <!--
