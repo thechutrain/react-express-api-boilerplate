@@ -5,6 +5,11 @@ const app = express()
 
 // ======= Add middlerware =======
 
+// ======== API ROUTES HERE ========
+app.get('/test', (req, res) => {
+	res.json({ test: 'hi franklin!!!' })
+})
+
 // ======= DEVELOPMENT BUILD =======
 if (process.env.NODE_ENV === 'DEV') {
 	console.log('======== DEVELOPMENT ENVIRONMENT!!!! ========')
@@ -18,11 +23,6 @@ if (process.env.NODE_ENV === 'PROD') {
 		res.sendFile(path.join(__dirname, '../', '/build/index.html'))
 	})
 }
-
-// ======== API ROUTES HERE ========
-app.get('/test', (req, res) => {
-	res.json({ test: 'hi franklin!!!' })
-})
 
 // ======== Start Server ========
 app.listen(PORT, () => {
