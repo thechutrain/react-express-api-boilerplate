@@ -3,6 +3,9 @@ const router = express.Router()
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
+router.get('/', (req, res) => {
+	res.json({ test: '123' })
+})
 /*  ========== Register Route ===========
 *
 */
