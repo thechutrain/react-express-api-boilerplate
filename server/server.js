@@ -3,7 +3,6 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3001
 const app = express()
-require('dotenv').load()
 
 // ======= MIDDLEWARE =======
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,6 +10,7 @@ app.use(bodyParser.json())
 
 // ======= DEVELOPMENT BUILD =======
 if (process.env.NODE_ENV === 'DEV') {
+	require('dotenv').load()
 	console.log('======== DEVELOPMENT ENVIRONMENT!!!! ========')
 }
 
