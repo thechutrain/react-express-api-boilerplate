@@ -33,6 +33,7 @@ class RegisterForm extends Component {
 				errorMessage: 'Password must be at least 6 characters long'
 			}))
 		} else {
+			// ==== ALL VALIDATORS PASSED ====
 			axios
 				.post('/api/auth/register', {
 					username: this.state.username,
@@ -42,7 +43,10 @@ class RegisterForm extends Component {
 					if (response.data.success) {
 						this.setState(() => ({ redirectTo: '/login' }))
 					} else {
-						console.log(response.data)
+						this.setState(() => ({
+							error: true,
+							errorMessage: response.data.errorMessage
+						}))
 					}
 				})
 				.catch(err => {
