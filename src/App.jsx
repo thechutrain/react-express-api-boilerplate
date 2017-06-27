@@ -11,6 +11,16 @@ class App extends Component {
 			loggedIn: false
 		}
 	}
+	setToken = token => {
+		this.setState(() => {
+			return { token, loggedIn: true }
+		})
+	}
+	removeToken = () => {
+		this.setState(() => {
+			return { token: '', loggedIn: false }
+		})
+	}
 	render() {
 		return (
 			<div className="App container-fluid">
@@ -25,14 +35,29 @@ class App extends Component {
 						<li className="nav-item mr-2">
 							<Link to="/">Home</Link>
 						</li>
-						<li className="nav-item mr-2">
-							<Link to="/login">Login</Link>
-						</li>
+						{this.state.loggedIn
+							? <li className="nav-item mr-2">
+									<a
+										href=""
+										onClick={e => {
+											e.preventDefault()
+											this.removeToken()
+										}}
+									>
+										Log out
+									</a>
+								</li>
+							: <li className="nav-item mr-2">
+									<Link to="/login">Login</Link>
+								</li>}
 					</ul>
 				</nav>
 				{/*  Routes for the Components*/}
 				<div className="container">
-					<Route path="/login" component={LoginComponent} />
+					<Route
+						path="/login"
+						render={() => <LoginComponent setToken={this.setToken} />}
+					/>
 					<Route
 						exact
 						path="/"

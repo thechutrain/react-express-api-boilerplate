@@ -15,11 +15,11 @@ router.post('/register', (req, res) => {
 	// 2. Search the User database to make sure there isn't already a user with the same username
 	User.find({ username }, (err, match) => {
 		if (err) {
-			return res.json({ error: true, errMsgs: ['Error in finding User'] })
+			return res.json({ error: true, errorMessage: 'Error in finding User' })
 		} else if (match.length !== 0) {
 			return res.json({
 				error: true,
-				errMsgs: ['Already a user with that username']
+				errorMessage: 'There is already a user with that username'
 			})
 		}
 		// 3. Create the new user!
@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
 		userData.save(err => {
 			console.log('saving ...')
 			if (err) {
-				return res.json({ error: true, errMsgs: ['Saving Error'] })
+				return res.json({ error: true, errorMessage: 'Saving Error' })
 			}
 			return res.json({ success: true })
 		})
@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
 	if (!username || !password) {
 		return res.json({
 			error: true,
-			errMsgs: ['Must provide username & password']
+			errorMessage: 'Must provide username & password'
 		})
 	}
 	// 2. Search database to find the user
@@ -56,10 +56,10 @@ router.post('/login', (req, res) => {
 		if (err || userMatch === null) {
 			return res.json({
 				error: true,
-				errMsgs: ['No userMatch for that username']
+				errorMessage: 'No userMatch for that username'
 			})
 		} else if (!userMatch.checkPassword(password)) {
-			return res.json({ error: true, errMsgs: ['Password is incorrect'] })
+			return res.json({ error: true, errorMessage: 'Password is incorrect' })
 		} else {
 			// 3. Valid user ... so let's make a token
 			// 3a. make the payload of the JWT (IMPORTANT don't put sensitive data here!! like a password)
