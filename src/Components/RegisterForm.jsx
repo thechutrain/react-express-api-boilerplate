@@ -16,7 +16,7 @@ class RegisterForm extends Component {
 	}
 	handleSubmit = e => {
 		e.preventDefault()
-		console.log('submitting registration form ...')
+
 		if (this.state.password1 !== this.state.password2) {
 			return this.setState(() => ({
 				error: true,
